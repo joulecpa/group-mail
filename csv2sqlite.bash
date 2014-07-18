@@ -13,4 +13,4 @@ done <$1
 
 transaction=$transaction"COMMIT;"
 
-sqlite3 fsosscfp "$transaction"
+sqlite3 fsosscfp.sqlite3 "$transaction"
