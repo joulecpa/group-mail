@@ -3,14 +3,14 @@
 # Inserts emails with unique ID from specific CSV format into SQLite database
 # Author: Christopher Markieta
 
-# Usage: ./csv2sqlite contacts.csv database.sql TABLENAME
+# Usage: ./csv2sqlite.bash contacts.csv
 
 transaction="BEGIN;"
 
 while read p; do
-    transaction=$transaction"INSERT INTO $3 VALUES ($p);"
+    transaction=$transaction"INSERT INTO FSOSSCFP VALUES ($p);"
 done <$1
 
 transaction=$transaction"COMMIT;"
 
-sqlite3 $2 "$transaction"
+sqlite3 fsosscfp "$transaction"
