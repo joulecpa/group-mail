@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>FSOSS Unsubscribe</title>
+    <title>FSOSS Subscribe</title>
 </head>
 <body>
 
 <?php
 // #!/usr/bin/env php
 
-// Remove email address entry from a CSV file
+// Add email address to database
 // Author: Christopher Markieta
 
 try
@@ -22,7 +22,7 @@ try
     $db     = null;
 ?>
     <h3>Thank You</h3>
-    <p>You are unsubscribed from the mailing list.</p>
+    <p>You are subscribed to the mailing list.</p>
 <?php }
 catch(Exception $e)
 { ?>
