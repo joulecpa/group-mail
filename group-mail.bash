@@ -4,8 +4,15 @@
 # Author: Christopher Markieta
 
 if [ -z "$1" ]; then
-	echo 'Missing argument for database file'
+	echo 'Missing argument for database file.'
 	exit 1
+elif [ -z "$2" ]; then
+	echo 'Missing argument for email subject.'
+	exit 2
+elif [ -n "$3" ]; then
+	echo 'Too many arguments specified.'
+	echo 'Ensure argument 2 (email subject) is surrounded in quotes.'
+	exit 3
 fi
 
        IFS='|'                                     # Bash delimeter
@@ -19,7 +26,7 @@ while read -r recipient; do
 
 	/usr/sbin/sendmail $email <<-EOF
 		to:$email
-		subject:Thank you for participating in FSOSS 2014
+		subject:$2
 		from:FSOSS-CFP <fsoss-cfp@senecac.on.ca>
 		$body
 		<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
