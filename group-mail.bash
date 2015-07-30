@@ -21,8 +21,8 @@ fi
     footer=$(/usr/bin/cat     "$MY_DIR"/footer.html)
 recipients=$(/usr/bin/sqlite3 "$1" "SELECT * FROM FSOSSCFP")
 
-while read -r recipient; do
-	read email id <<< "$recipient"
+while /usr/bin/read -r recipient; do
+	/usr/bin/read email id <<< "$recipient"
 
 	/usr/sbin/sendmail $email <<-EOF
 		to:$email
