@@ -19,13 +19,19 @@ while read -r recipient; do
 
 	/usr/sbin/sendmail $email <<-EOF
 		to:$email
-		subject:FSOSS 2014 Evite (UPDATED FINAL - READY FOR USE)
+		subject:Thank you for participating in FSOSS 2014
 		from:FSOSS-CFP <fsoss-cfp@senecac.on.ca>
 		$body
-		<div align=3D"center">If you do not wish to receive further email regarding=
-		 FSOSS, please <a href=3D"http://rome.proximity.on.ca/fsoss/unsubscribe.php=
+		<p class=3D"MsoNormal" align=3D"center" style=3D"text-align:center;backgrou=
+		nd:white"><span style=3D"color:black">If you do not wish to receive further=
+		 email regarding FSOSS, please
+		<a href=3D"http://rome.proximity.on.ca/fsoss/unsubscribe.php
 		?email=3D$(perl -MURI::Escape -e 'print uri_escape($ARGV[0]);' "$email")&id=
-		=3D$id">click here to unsubscribe</a></div>
+		=3D$id">click here to unsubscribe</a><o:p></o:p></span></p>
+		<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+		</div>
+		</body>
+		</html>
 		$footer
 	EOF
 done <<< "$recipients"
