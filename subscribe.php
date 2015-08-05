@@ -27,7 +27,7 @@ try
 catch(Exception $e)
 { ?>
     <h3>Something went wrong</h3>
-    <p>Please send us an email at <a href="mailto:ostep-team@senecac.on.ca?Subject=FSOSS%20Unsubscribe%20Failed">ostep-team@senecac.on.ca</a> .</p>
+    <p>Please send us an email at <a href="mailto:ostep-team@senecac.on.ca?Subject=FSOSS%20Unsubscribe%20Failed">ostep-team@senecac.on.ca</a></p>
 <?php } ?>
 
 </body>
