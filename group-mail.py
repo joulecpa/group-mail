@@ -3,6 +3,7 @@
 # Send email to database list of addresses
 # Author: Christopher Markieta
 
+import argparse
 import smtplib
 from email.mime.text import MIMEText
 
@@ -15,6 +16,18 @@ msg['Subject'] = "subject line"
 msg['From'] = sender
 msg['To'] = ", ".join(recipients)
 s.sendmail(sender, recipients, msg.as_string())
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description='Send email to database list of addresses')
+
+    parser.add_argument('-d', '--database',
+                        help='List of email addresses', required=True)
+
+    parser.add_argument('-s', '--subject',
+                        help='Email subject line', required=True)
+
+    args = vars(parser.parse_args())
 
 if [ -z "$1" ]; then
 	echo 'Missing argument for database file.'
