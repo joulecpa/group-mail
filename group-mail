@@ -20,13 +20,13 @@ fi
         IFS='|'                                     # Bash delimeter
      MY_DIR=$(/usr/bin/dirname $0)                  # Directory of script
        body=$(/usr/bin/cat     "$MY_DIR"/body.html) # Reduce disk access time
-     footer=$(/usr/bin/cat     "$MY_DIR"/footer.html)
- recipients=$(/usr/bin/sqlite3 "$1" "SELECT * FROM FSOSSCFP")
+     footer=$(/usr/bin/cat     "$MY_DIR"/footer)
+ recipients=$(/usr/bin/sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
        from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
 unsubscribe='http://rome.proximity.on.ca/fsoss/unsubscribe.php' # Inaccessible
 
-while /usr/bin/read -r recipient; do
-	/usr/bin/read email id <<< "$recipient"
+while read -r recipient; do
+	read email id <<< "$recipient"
 
 	/usr/sbin/sendmail $email <<-EOF
 		to:$email
