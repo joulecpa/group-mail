@@ -15,9 +15,17 @@ try
 {
     $email = SQLite3::escapeString(urldecode($_GET['email']));
     $id    = SQLite3::escapeString($_GET['id']);
-    $db    = new PDO('sqlite:/var/fsoss/fsosscfp.sqlite3') or die ('cannot open the database');
+    $db    = new PDO('sqlite:/var/fsoss/fsoss.sqlite3') 
+                 or die ('cannot open the database');
 
-    $stmt = $db->prepare("DELETE FROM FSOSSCFP WHERE EMAIL=:email AND ID=:id");
+    $stmt = $db->prepare("INSERT OR IGNORE INTO SUBSCRIPTION 
+                              (EMAIL) VALUES (:email);
+
+                          UPDATE SUBSCRIPTION SET
+                              SUBSCRIBED = 1, 
+                              DATE       = CURRENT_TIMESTAMP
+                          WHERE EMAIL=:email AND ID=:id;");
+
     $stmt->execute(array(":email" => $email, ":id" => $id));
     $db     = null;
 ?>
