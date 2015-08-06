@@ -8,29 +8,32 @@
 if [ -z "$1" ]; then
 	echo 'Missing argument for database file.'
 	exit 1
-elif [ -z "$2" ]; then
-	echo 'Missing argument for email subject.'
-	exit 2
 elif [ -n "$3" ]; then
 	echo 'Too many arguments specified.'
 	echo 'Ensure argument 2 (email subject) is surrounded in quotes.'
 	exit 3
 fi
 
-        IFS='|'                            # Bash delimeter
-     MY_DIR=$(dirname $0)                  # Directory of script
-       body=$(cat     "$MY_DIR"/body.html) # Reduce disk access time
-     footer=$(cat     "$MY_DIR"/footer)
+        IFS='|'           # Bash delimeter
+     MY_DIR=$(dirname $0) # Directory of script
+       body=$(sed -n '/Content-Type: multipart\/related;/,/<\/div>/p' original | head -n -1)
+     footer=$(grep -A100000 '</html>' original | tail -n +2)
  recipients=$(sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
        from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
 unsubscribe='http://leapproject.ca/fsoss/unsubscribe' # Must be < 64 characters
+
+if [ -n "$2" ]; then
+	subject="$2"
+else
+	subject=$(grep 'Subject: ' original | head -1 | cut -d' ' -f2-)
+fi
 
 while read -r recipient; do
 	read email id <<< "$recipient"
 
 	sendmail $email <<-EOF
 		to:$email
-		subject:$2
+		subject:$subject
 		from:$from
 		$body
 		<p style=3D"text-align:left">
