@@ -17,18 +17,18 @@ elif [ -n "$3" ]; then
 	exit 3
 fi
 
-        IFS='|'                                     # Bash delimeter
-     MY_DIR=$(/usr/bin/dirname $0)                  # Directory of script
-       body=$(/usr/bin/cat     "$MY_DIR"/body.html) # Reduce disk access time
-     footer=$(/usr/bin/cat     "$MY_DIR"/footer)
- recipients=$(/usr/bin/sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
+        IFS='|'                            # Bash delimeter
+     MY_DIR=$(dirname $0)                  # Directory of script
+       body=$(cat     "$MY_DIR"/body.html) # Reduce disk access time
+     footer=$(cat     "$MY_DIR"/footer)
+ recipients=$(sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
        from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
 unsubscribe='http://leapproject.ca/fsoss/unsubscribe' # Must be < 64 characters
 
 while read -r recipient; do
 	read email id <<< "$recipient"
 
-	/usr/sbin/sendmail $email <<-EOF
+	sendmail $email <<-EOF
 		to:$email
 		subject:$2
 		from:$from
