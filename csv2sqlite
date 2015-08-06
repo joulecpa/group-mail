@@ -8,7 +8,7 @@
 transaction="BEGIN;"
 
 while read p; do
-    transaction=$transaction"INSERT INTO SUBSCRIPTION (EMAIL) VALUES (\"$p\");"
+    transaction=$transaction"INSERT OR IGNORE INTO SUBSCRIPTION (EMAIL) VALUES (\"$p\");"
 done <$1
 
 transaction=$transaction"COMMIT;"
