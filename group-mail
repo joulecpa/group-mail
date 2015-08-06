@@ -16,8 +16,8 @@ fi
 
         IFS='|'           # Bash delimeter
      MY_DIR=$(dirname $0) # Directory of script
-       body=$(sed -n '/Content-Type: multipart\/related;/,/<\/div>/p' original | head -n -1)
-     footer=$(grep -A100000 '</html>' original | tail -n +2)
+       body=$(sed -n '/Content-Type: multipart\/related;/,/<\/div>/p' "$MY_DIR"/original | head -n -1)
+     footer=$(grep -A100000 '</html>' "$MY_DIR"/original | tail -n +2)
  recipients=$(sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
        from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
 unsubscribe='http://leapproject.ca/fsoss/unsubscribe' # Must be < 64 characters
@@ -25,7 +25,7 @@ unsubscribe='http://leapproject.ca/fsoss/unsubscribe' # Must be < 64 characters
 if [ -n "$2" ]; then
 	subject="$2"
 else
-	subject=$(grep 'Subject: ' original | head -1 | cut -d' ' -f2-)
+	subject=$(grep 'Subject: ' "$MY_DIR"/original | head -1 | cut -d' ' -f2-)
 fi
 
 while read -r recipient; do
