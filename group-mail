@@ -23,7 +23,7 @@ fi
      footer=$(/usr/bin/cat     "$MY_DIR"/footer)
  recipients=$(/usr/bin/sqlite3 "$MY_DIR/$1" "SELECT * FROM FSOSSCFP")
        from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
-unsubscribe='http://leapproject.ca/fsoss/unsubscribe.php'
+unsubscribe='http://leapproject.ca/fsoss/unsubscribe'
 
 while read -r recipient; do
 	read email id <<< "$recipient"
