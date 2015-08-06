@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then
+    echo 'Missing argument for database name'
+    echo 'Usage: ./mkdb database.sqlite3'
+    exit 1
+fi
+
+sqlite3 "$1" 'CREATE TABLE "FSOSSCFP" (EMAIL TEXT PRIMARY KEY, ID INTEGER DEFAULT (RANDOM()))'
