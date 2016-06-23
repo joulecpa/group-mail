@@ -14,26 +14,32 @@ elif [ -n "$3" ]; then
 	exit 3
 fi
 
-        IFS='|'           # Bash delimeter
-     MY_DIR=$(dirname $0) # Directory of script
+IFS='|' # Bash delimeter
+MY_DIR=$(dirname $0) # Directory of script
 
-              # Gmail: Content-Type: multipart\/related
-       body=$(sed -n '/Content-Type: multipart\/alternative;/,/<\/html>/p' "$MY_DIR"/original | head -n -3)
+       # Gmail: Content-Type: multipart\/related
+body=$(sed -n '/Content-Type: multipart\/alternative;/,/<\/html>/p' "$MY_DIR"/original | head -n -3)
 
-     footer=$(grep -A100000 '</html>' "$MY_DIR"/original | tail -n +2)
- recipients=$(sqlite3 "$MY_DIR/$1" "SELECT EMAIL, ID FROM SUBSCRIPTION WHERE SUBSCRIBED = 1")
-       from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
-unsubscribe='http://leapproject.ca/fsoss/unsubscribe' # Must be < 64 characters
+# Read embedded images/files to append after inserting unsubscribe link
+footer=$(grep -A100000 '</html>' "$MY_DIR"/original | tail -n +2)
+
+recipients=$(sqlite3 "$MY_DIR/$1" "SELECT EMAIL, ID FROM SUBSCRIPTION WHERE SUBSCRIBED = 1")
+from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
+
+# Must be < 64 characters to fit quoted-printable format
+unsubscribe='http://leapproject.ca/fsoss/unsubscribe'
 
 if [ -n "$2" ]; then
 	subject="$2"
 else
+	# Use original email's subject
 	subject=$(grep 'Subject: ' "$MY_DIR"/original | head -1 | cut -d' ' -f2-)
 fi
 
 while read -r recipient; do
 	read email id <<< "$recipient"
 
+	# Tabs must be used here between EOF
 	sendmail $email <<-EOF
 		to:$email
 		subject:$subject
