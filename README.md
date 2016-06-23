@@ -1,4 +1,4 @@
 group-mail
 ==========
 
-Send HTML-formatted email to CSV list of addresses
+Send HTML-formatted email to SQLite database of addresses
