@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Create SQLite3 database file for tracking subscription status
+# Author: Christopher Markieta
+
 if [ -z "$1" ]; then
     echo 'Missing argument for database name'
     echo 'Usage: ./mkdb database.sqlite3'
