@@ -16,6 +16,7 @@ Please note that pasting from your clipboard can take upwards of 1-2 minutes dep
 The `group-mail` script needs to be modified if the original email comes from Gmail instead of Office 365. For example, the script looks for:
 
 Gmail:      `Content-Type: multipart\/related`
+
 Office 365: `Content-Type: multipart\/alternative`
 
 You can determine the Content-Type by searching the `original` file.
