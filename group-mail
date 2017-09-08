@@ -18,13 +18,16 @@ IFS='|' # Bash delimeter
 MY_DIR=$(dirname $0) # Directory of script
 
        # Gmail: Content-Type: multipart\/related
+       # Office365: Content-Type: multipart\/alternative
 body=$(sed -n '/Content-Type: multipart\/alternative;/,/<\/html>/p' "$MY_DIR"/original | head -n -3)
 
 # Read embedded images/files to append after inserting unsubscribe link
 footer=$(grep -A100000 '</html>' "$MY_DIR"/original | tail -n +2)
 
 recipients=$(sqlite3 "$MY_DIR/$1" "SELECT EMAIL, ID FROM SUBSCRIPTION WHERE SUBSCRIBED = 1")
-from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
+#from='FSOSS-CFP <fsoss-cfp@senecac.on.ca>'
+from='FSOSS <fsoss@leapproject.ca>'
+replyto='FSOSS <fsoss@senecac.on.ca>'
 
 # Must be < 64 characters to fit quoted-printable format
 unsubscribe='http://leapproject.ca/fsoss/unsubscribe'
@@ -38,12 +41,12 @@ fi
 
 while read -r recipient; do
 	read email id <<< "$recipient"
-
 	# Tabs must be used here between EOF
 	sendmail $email <<-EOF
 		to:$email
 		subject:$subject
 		from:$from
+		reply-to:$replyto
 		$body
 		<p style=3D"text-align:left">
 		If you do not wish to receive further email regarding FSOSS, please
